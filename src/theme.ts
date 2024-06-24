@@ -33,6 +33,7 @@ const theme = createTheme({
                 },
             },
         },
+        
         MuiButton: {
             variants: [
                 {
@@ -45,6 +46,7 @@ const theme = createTheme({
                 },
             ]
         },
+
         MuiTableCell: {
             styleOverrides: {
               root: {
@@ -67,6 +69,7 @@ const theme = createTheme({
             },
     
         },
+
         MuiOutlinedInput: {
             styleOverrides: {
               notchedOutline: {
@@ -81,6 +84,7 @@ const theme = createTheme({
               },
             },
         },
+
         MuiDivider: {
             styleOverrides: {
               root: {
@@ -88,6 +92,7 @@ const theme = createTheme({
               },
             },
         },
+
         MuiListSubheader:{
             styleOverrides: {
                 root: {
@@ -100,6 +105,7 @@ const theme = createTheme({
                 },
               },
         },
+
         MuiListItemButton: {
             styleOverrides: {
                 root: {

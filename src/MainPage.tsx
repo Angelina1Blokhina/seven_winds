@@ -1,7 +1,7 @@
 import CMP from "./components/CMP/CMP";
 import NavBar from "./components/NavBar/NavBar";
 
-function MainPage() {
+export default function MainPage() {
     return (
       <>
       <NavBar/>
@@ -10,5 +10,3 @@ function MainPage() {
       
     );
   }
-  
-export default MainPage;

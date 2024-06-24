@@ -1,5 +1,5 @@
 export const columnsCMP = [
-    { name: 'rowName', align: 'left' as const },
+    { name: 'rowName' },
     { name: 'salary', align: 'right' as const },
     { name: 'equipmentCosts', align: 'right' as const },
     { name: 'overheads', align: 'right' as const },
@@ -8,5 +8,5 @@ export const columnsCMP = [
 
 export const navList =[
   'По проекту', 'Объекты', 'РД', 'МТО', 'СМР', 'График', 'МиМ', 'Рабочие', 'Капвложения', 
-  'Бюджет', 'Финансирование', 'Панорамы', "Камеры", 'Поручения', 'Контрагенты'
+  'Бюджет', 'Финансирование', 'Панорамы', 'Камеры', 'Поручения', 'Контрагенты'
 ]

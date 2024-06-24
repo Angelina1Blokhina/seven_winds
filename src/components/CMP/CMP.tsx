@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { createRow, deleteRow, fetchRowList, updateRow } from "../../server/APIServer";
 import {  Box, Button, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import {  RowData } from "../../dataStructure";
-import './CMP.scss'
-import TableIcon from '../../assets/img/icon_table.svg'
-import TrashIcon from '../../assets/img/TrashFill.svg'
+import "./CMP.scss";
+import TableIcon from "../../assets/img/icon_table.svg";
+import TrashIcon from "../../assets/img/TrashFill.svg";
 import CMPTableCell from "./CMPTableCell";
 import { columnsCMP } from "../../constData";
 import { transformRowData, transformToServerRow } from "./transformData";
 import React from "react";
 
 
-function CMP() {
+export default function CMP() {
     const [rowData, setRowData] = useState<RowData[] | null>(null);
     const [editingRow, setEditingRow] = useState<number | null>(null); 
     const [isCreatingNewRow, setIsCreatingNewRow] = useState<boolean>(false);
@@ -19,14 +19,18 @@ function CMP() {
     const [mouseRowId, setMouseRowId] = useState<number|null>(null);
 
     useEffect(() => {
+
         fetchRowList().then(data => {
             if(data){
+
                 if (data.length === 0) {  
-                    console.log('data', data)
+
                     handleCreateRow();
+
                 } else {
+
                     setRowData(data);
-                    console.log(rowData)
+
                 }
             }
                 
@@ -38,13 +42,16 @@ function CMP() {
     }, []);
 
     const updateRowDataById = (data: RowData[], id: number, updatedRow: RowData): RowData[] => {
+
         return data.map(row => {
           if (row.id === id) {
             return { ...row, ...updatedRow };
           }
+
           if (row.child && row.child.length > 0) {
             return { ...row, child: updateRowDataById(row.child, id, updatedRow) };
           }
+
           return row;
         });
       };
@@ -82,14 +89,14 @@ function CMP() {
         setEditingRow(newEmptyRow.id);
         setIsCreatingNewRow(true);
         setParentId(parent_id);
-        console.log('emp', rowData, isCreatingNewRow)
+
     };
 
     const saveNewRow = (row: RowData) => {
         const createNewRow = transformRowData(row, parentId);
 
         createRow(createNewRow).then(data=>{
-            console.log('saveNewRow', data)
+            
             setRowData((prevData) => updateRowDataById(prevData || [], row.id, data.current))
             setIsCreatingNewRow(false);
             setEditingRow(null);
@@ -97,13 +104,11 @@ function CMP() {
         })
     }
 
-    const handleDoubleClick = (id: number) =>{
-        setEditingRow(id)
-        console.log('double click')
-    }
+    const handleDoubleClick = (id: number) =>{ setEditingRow(id)}
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, row: RowData) => {
         const { name, value } = e.target;
+
         const updateRowInTree = (data: RowData[]): RowData[] =>
             data.map(item =>
               item.id === row.id
@@ -116,19 +121,22 @@ function CMP() {
 
     const handleUpdateRow = (row: RowData) => {
         if(isCreatingNewRow){
+
             saveNewRow(row)
         }
         else{
+
             const toServerRow = transformToServerRow(row)
-            console.log(row)
+           
             updateRow(toServerRow, row.id).then(data =>{
                 setRowData((prevData) => updateRowDataById(prevData || [], row.id, data.current))
             })
-            console.log(rowData)
+
             setEditingRow(null)
         }    
     };
     const handleDeleteRow = (row_id: number)=>{
+
         deleteRow(row_id).then(data =>{
             const deleteById = (id: number, data: RowData[]): RowData[] => {
                 return data.reduce((acc: RowData[], item: RowData) => {
@@ -146,25 +154,25 @@ function CMP() {
                     return acc;
                 }, []);
             };
+
             setRowData((prevData) => deleteById(row_id, prevData || []));
-            console.log('delete',data)
+    
         })
     }
 
     const handleMouseEnter = (row_id: number) => {
+
       if (editingRow !== row_id && !isCreatingNewRow) {
-        setMouseRowId(row_id); // Показываем иконку создания строки при наведении, если строка создана и не в режиме редактирования
+        setMouseRowId(row_id); 
       }
     };
   
-    const handleMouseLeave = () => {
-      setMouseRowId(null); // Скрываем иконку создания строки при уходе мыши
-    };
+    const handleMouseLeave = () => { setMouseRowId(null) };
+
     const renderRows = (rows: RowData[], depth: number = 0): JSX.Element[] =>
         rows.map((row) => (
             <React.Fragment key={row.id}>
                 <TableRow     
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 className="table-row"
                 onDoubleClick={() => handleDoubleClick(row.id)}
                 >
@@ -175,18 +183,23 @@ function CMP() {
                             style={{ paddingLeft: depth * 20 + 10}}
                             onMouseEnter={() =>handleMouseEnter(row.id)} 
                             onMouseLeave={handleMouseLeave}>
+
                     <div className="icon-cell__btn-grp">
+
                         <Button disabled={editingRow !== null} onClick={() => handleCreateRow(row.id)} variant="iconTable">
                             <img src={TableIcon} alt=''/>
                         </Button>
+
                         {mouseRowId === row.id &&(
                         <Button onClick={() => handleDeleteRow(row.id)} variant="iconTable">
                             <img src={TrashIcon} alt=''/>
                         </Button>
                         )}
+
                     </div>
                     
                 </TableCell>
+                
                 {columnsCMP.map((col) => (
                     <CMPTableCell
                         key={col.name}
@@ -209,8 +222,9 @@ function CMP() {
     ));
 
     return (
-      <>
+      
     <Box component="main"  className='container-main'>
+
         <div className="container-main__container-header">
             <div className="container-main__header">Строительно-монтажные работы</div>
         </div>
@@ -218,7 +232,7 @@ function CMP() {
         <Divider/>
 
         <TableContainer >
-            <Table sx={{ minWidth: 650 }} className='table' aria-label="simple table">
+            <Table className='table' aria-label="simple table">
                 <TableHead >
                 <TableRow>
                     <TableCell >Уровень</TableCell>
@@ -234,10 +248,9 @@ function CMP() {
                 </TableBody>
             </Table>
         </TableContainer>
+
     </Box>
-      </>
-      
+
     );
   }
   
-export default CMP;

@@ -1,8 +1,8 @@
-import Header from './components/header/header';
+import Header from './components/Header/Header';
 import MainPage from './MainPage';
 import { Box } from '@mui/material';
 
-function App() {
+export default function App() {
   return (
     <Box sx={{ display: 'flex' }} >
       <Header/>
@@ -12,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+
