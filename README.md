@@ -4,6 +4,6 @@
 ****Необходимый стек: **TypeScript, React, SASS**, а так же всё что вам понадобится (кроме **jQuery** и **node-sass**).
 Опциональный стек: **RTK Query, MUI + styled-components**
 
-Будет замечательно, если вы зальёте сайт на vercel, github pages и тд, но это не обязательно.
+
 
 
